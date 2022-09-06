@@ -45,6 +45,10 @@ const routes: Routes = [
         loadChildren: () => import('./demo/pages/tables/tables.module').then(m => m.TablesModule)
       },
       {
+        path: 'itens',
+        loadChildren: () => import('./demo/pages/itens-table/itens.module').then(m => m.ItensModule)
+      },
+      {
         path: 'charts',
         loadChildren: () => import('./demo/pages/core-chart/core-chart.module').then(m => m.CoreChartModule)
       },

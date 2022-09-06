@@ -1,0 +1,41 @@
+table.mat-table {
+    display: table;
+    width: 100%;
+    // th {
+    //     background-color: red;
+    //     color: white;
+    // }
+    th.mat-sort-header-sorted {
+        color: black;
+      }
+}
+
+.width100{
+  width: 100%;
+}
+
+.width50{
+  width: 50%;
+}
+.width25{
+  width: 25%;
+}
+
+.espacamento{
+  margin-right:15px;
+}
+
+.verde{
+  color:green
+}
+
+.vermelho{
+  color: red;
+}
+
+.azul{
+  color: blue;
+}
+.fundo-verde{
+  background-color: rgb(149, 245, 149);
+}

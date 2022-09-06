@@ -1,0 +1,62 @@
+<div class="width100" style="display:flex"> 
+    <input [(ngModel)]="name" #ctrl="ngModel"  (keydown)="fazBuscaItens()" class="width50 espacamento"> 
+  
+    <select name="tipoItem" [(ngModel)]="tipoItemFiltro" class="width25" (change)="fazBuscaItens()"> 
+      <option *ngFor="let tipoItem of tiposItens" [value]="tipoItem.value">{{tipoItem.nome}}</option> 
+    </select> 
+  </div>
+  <table *ngIf="dataSource" mat-table [dataSource]="dataSource" class="mat-elevation-z8"  matSort  flex="100">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header > name </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="verificarRaridadeCaixa(element.name)"> {{element.name}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="differenceComparedToYesterday">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> 24h% </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="element.differenceComparedToYesterday > '0.1' ? 'verde' : 'vermelho'"> {{element.differenceComparedToYesterday  | number : '.2-2'}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="trendMonthPercentage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> 30d% </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="element.trendMonthPercentage > '0.1' ? 'verde' : 'vermelho'"> {{element.trendMonthPercentage  | number : '.2-2'}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="trendYearPercentage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> 1Year% </th>
+      <td mat-cell *matCellDef="let element" [ngClass]="element.trendYearPercentage > '0.1' ? 'verde' : 'vermelho'"> {{element.trendYearPercentage  | number : '.2-2'}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="totalSales">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Vendas </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalSales}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="marketQuantity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> marketQuantity </th>
+      <td mat-cell *matCellDef="let element"> {{element.marketQuantity}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="weeklySales">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Media Venda Diaria</th> 
+      <td mat-cell *matCellDef="let element"> {{element.weeklySales / 7 | number : '.2-2' }} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="porcentagemVenda">
+      <th mat-header-cell *matHeaderCellDef > Porcentagem de venda diaria sob a quantidade no mercado</th> 
+      <td mat-cell *matCellDef="let element" [ngClass]="((element.weeklySales / 7) / element.marketQuantity) * 100 > 40 ? 'verde' : 'vermelho'" > {{((element.weeklySales / 7) / element.marketQuantity) * 100 | number : '.2-2' }} % </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="medianMonth">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> medianMonth </th>
+      <td mat-cell *matCellDef="let element" > {{element.medianMonth  | number : '.2-2'}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="marketPrice">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> marketPrice </th>
+      <td mat-cell *matCellDef="let element"> {{element.marketPrice}} ({{element.marketPrice * 5.10}})  </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="row.trendYearPercentage < '-50' && ((row.weeklySales / 7) / row.marketQuantity) * 100 > 40 ? 'fundo-verde' : ''"></tr>
+  </table>
+  

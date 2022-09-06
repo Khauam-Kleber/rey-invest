@@ -9,6 +9,8 @@ import {TodoCardCompleteDirective} from './components/todo/todo-card-complete.di
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {ClickOutsideModule} from 'ng-click-outside';
 import {SpinnerComponent} from './components/spinner/spinner.component';
+import { MatTableModule } from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
 
 import 'hammerjs';
 import 'mousetrap';
@@ -29,7 +31,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BreadcrumbModule,
     ModalModule,
     GalleryModule.forRoot(),
-    ClickOutsideModule
+    ClickOutsideModule,
+    MatTableModule,
+    MatSortModule,
   ],
   exports: [
     CommonModule,
@@ -45,7 +49,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TodoListRemoveDirective,
     TodoCardCompleteDirective,
     ClickOutsideModule,
-    SpinnerComponent
+    SpinnerComponent,
+    MatTableModule,
+    MatSortModule,
   ],
   declarations: [
     DataFilterPipe,
