@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { AuthSigninRoutingModule } from './auth-signin-routing.module';
 import { AuthSigninComponent } from './auth-signin.component';
+import { SharedModule } from 'src/app/theme/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    AuthSigninRoutingModule
+    AuthSigninRoutingModule,
+    SharedModule  
   ],
   declarations: [AuthSigninComponent]
 })

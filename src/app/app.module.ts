@@ -21,6 +21,7 @@ import { NavLeftComponent } from './theme/layout/admin/nav-bar/nav-left/nav-left
 import { NavSearchComponent } from './theme/layout/admin/nav-bar/nav-left/nav-search/nav-search.component';
 import { NavRightComponent } from './theme/layout/admin/nav-bar/nav-right/nav-right.component';
 import { ConfigurationComponent } from './theme/layout/admin/configuration/configuration.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,7 @@ import { ConfigurationComponent } from './theme/layout/admin/configuration/confi
     NgbDropdownModule,
     NgbTooltipModule,
     NgbButtonsModule,
-    NgbTabsetModule
+    NgbTabsetModule,
   ],
   providers: [NavigationItem],
   bootstrap: [AppComponent]

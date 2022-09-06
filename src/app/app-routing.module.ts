@@ -6,13 +6,28 @@ import { AuthComponent } from './theme/layout/auth/auth.component';
 const routes: Routes = [
   {
     path: '',
-    component: AdminComponent,
+    component: AuthComponent,
     children: [
       {
         path: '',
-        redirectTo: 'dashboard/default', //'auth/signin',
+        redirectTo: 'auth/signin',
         pathMatch: 'full'
       },
+      {
+        path: 'auth',
+        loadChildren: () => import('./demo/pages/authentication/authentication.module').then(m => m.AuthenticationModule)
+      }
+    ]
+  },
+  {
+    path: '',
+    component: AdminComponent,
+    children: [
+      // {
+      //   path: '',
+      //   redirectTo: 'dashboard/default', //'auth/signin',
+      //   pathMatch: 'full'
+      // },
       {
         path: 'dashboard',
         loadChildren: () => import('./demo/dashboard/dashboard.module').then(m => m.DashboardModule)
@@ -39,16 +54,7 @@ const routes: Routes = [
       }
     ]
   },
-  {
-    path: '',
-    component: AuthComponent,
-    children: [
-      {
-        path: 'auth',
-        loadChildren: () => import('./demo/pages/authentication/authentication.module').then(m => m.AuthenticationModule)
-      }
-    ]
-  }
+
 ];
 
 @NgModule({
