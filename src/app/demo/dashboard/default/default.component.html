@@ -1,19 +1,20 @@
 <div class="row">
-  <div class="col-md-6 col-xl-4">
-    <app-card   *ngFor="let user of users"> </app-card>[hidHeader]="true">
-        <h4 class="mb-4  text-center" >AK 47 REDLINE</h4>
-        <div *ngIf="valorTesteMudar" class="column d-flex align-items-left">
+  <div  *ngFor="let item of itensService.favoritos" class="col-md-6 col-xl-4">
+    <!--  -->
+    <app-card [hidHeader]="true"> 
+        <h4 class="mb-4  text-center" >{{item.name}}</h4>
+        <div class="column d-flex align-items-left">
           <div class="col-8">
-            <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>{{valorTesteMudar.median_price}}</h3>
+            <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>{{item.marketPrice}}</h3>
             <div class="col-8 text-left">
-              <p class="m-b-0">median_price</p>
+              <p class="m-b-0">Preço</p>
             </div>
           </div>
           
           <div class="col-9">
-            <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-down text-c-red f-30 m-r-10"></i>{{valorTesteMudar.volume}}</h3>
+            <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-down text-c-red f-30 m-r-10"></i>{{item.marketQuantity}}</h3>
             <div class="col-8 text-left">
-              <p class="m-b-0">volume</p>
+              <p class="m-b-0">Quantidade</p>
             </div>
           </div>
         </div>

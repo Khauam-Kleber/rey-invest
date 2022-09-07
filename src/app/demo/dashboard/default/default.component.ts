@@ -23,15 +23,16 @@ import { ItensService } from 'src/app/services/itens.service.js';
 })
 export class DefaultComponent implements OnInit {
 
-  constructor(private itensService: ItensService) { }
+  constructor(public itensService: ItensService) { }
   valorTesteMudar: any;
   
-  ngOnInit() {
-   
+  ngOnInit() { 
+    this.itensService.atualizarLista();
     //para cada card buscar valores da steam em tempo real?
-    this.itensService.getItemPrice().subscribe( (response:any) => {
-      this.valorTesteMudar = response
-    });
+
+    // this.itensService.getItemPrice().subscribe( (response:any) => {
+    //   this.valorTesteMudar = response
+    // });
     
     setTimeout(() => {
       const latlong = {};

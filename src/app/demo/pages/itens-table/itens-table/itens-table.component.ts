@@ -41,8 +41,6 @@ export class ItensTableComponent implements OnInit {
 
 
   fazBuscaItens(){
-    console.log(this.tipoItemFiltro);
-   
     this.service.getItensMercadoSteam(this.name, this.tipoItemFiltro).subscribe((response:any) => this.dataSource = new MatTableDataSource(response['data']) );
     this.dataSource.sort = this.sort;  
 
@@ -72,7 +70,21 @@ export class ItensTableComponent implements OnInit {
   }
 
   adicionarAosFavoritos(element){
-    this.service.set(element);
+    if(this.verificarFavoritos(element) == false){
+      this.service.delete(element.id);
+    }else{
+      this.service.set(element);
+    }
+  
+    this.service.atualizarLista();
     // this.service.clear();
+  }
+
+  verificarFavoritos(element){
+    if(this.service.favoritos && this.service.favoritos.find(e => e.id === element.id)){
+      return false;
+    }else{
+      return true;
+    }
   }
 }

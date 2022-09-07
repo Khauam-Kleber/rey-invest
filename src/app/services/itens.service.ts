@@ -8,7 +8,7 @@ export class ItensService {
   // private url = 'https://steamfolio.com/api/Popular/sort?type=10&ascending=false&watchlist=false&searchTerm=karrigan&filterType=3';
   
   private storage: Storage;
-  public favoritos: any[] = [];
+  public favoritos: any = [];
   
   constructor(private httpClient: HttpClient) {
     this.storage = window.localStorage;
@@ -84,7 +84,6 @@ export class ItensService {
   }
 
    delete(id: number) {
-    console.log('teste')
     let objIndex = this.favoritos.findIndex((obj => obj.id == id));
     if(objIndex != -1 && objIndex != undefined && objIndex != null){
       this.favoritos.splice(objIndex, 1);
