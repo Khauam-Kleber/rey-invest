@@ -22,6 +22,7 @@ import { NavSearchComponent } from './theme/layout/admin/nav-bar/nav-left/nav-se
 import { NavRightComponent } from './theme/layout/admin/nav-bar/nav-right/nav-right.component';
 import { ConfigurationComponent } from './theme/layout/admin/configuration/configuration.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ItensService } from './services/itens.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,7 @@ import { HttpClientModule } from '@angular/common/http';
     NgbTabsetModule,
     HttpClientModule
   ],
-  providers: [NavigationItem, HttpClientModule],
+  providers: [NavigationItem, HttpClientModule, ItensService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

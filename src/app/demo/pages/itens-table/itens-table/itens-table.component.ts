@@ -10,12 +10,12 @@ import { ItensService } from 'src/app/services/itens.service';
 })
 export class ItensTableComponent implements OnInit {
   
-  displayedColumns: string[] = ['name', 'differenceComparedToYesterday', 'trendMonthPercentage', 'trendYearPercentage', 'totalSales', 'marketQuantity', 'weeklySales', 'porcentagemVenda',  'medianMonth', 'marketPrice'];
+  displayedColumns: string[] = ['favoritar', 'name', 'differenceComparedToYesterday', 'trendMonthPercentage', 'trendYearPercentage', 'totalSales', 'marketQuantity', 'weeklySales', 'porcentagemVenda',  'medianMonth', 'marketPrice'];
 
   dataSource = new MatTableDataSource<any>();
   playerName: string = '';
   name: string = '';
-  tipoItemFiltro: any = 0;
+  tipoItemFiltro: any = 1;
   tiposItens = [{nome: 'Nada', value: 0}, {nome: 'Caixa', value: 1},  {nome: 'Capsula', value: 2}, {nome: 'Adesivo', value: 3},  {nome: 'Agentes', value: 4}]
 
   private sort = new MatSort();
@@ -42,6 +42,7 @@ export class ItensTableComponent implements OnInit {
 
   fazBuscaItens(){
     console.log(this.tipoItemFiltro);
+   
     this.service.getItensMercadoSteam(this.name, this.tipoItemFiltro).subscribe((response:any) => this.dataSource = new MatTableDataSource(response['data']) );
     this.dataSource.sort = this.sort;  
 
@@ -68,5 +69,10 @@ export class ItensTableComponent implements OnInit {
       }
     }
     return ''
+  }
+
+  adicionarAosFavoritos(element){
+    this.service.set(element);
+    // this.service.clear();
   }
 }

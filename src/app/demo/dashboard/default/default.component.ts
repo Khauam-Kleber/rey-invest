@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+// import {SteamMarketFetcher} from 'steam-market-fetcher';
 
 declare const AmCharts: any;
 declare var $: any;
@@ -12,6 +13,8 @@ import '../../../../assets/charts/amchart/ammap.min.js';
 import '../../../../assets/charts/amchart/usaLow.js';
 import '../../../../assets/charts/amchart/radar.js';
 import '../../../../assets/charts/amchart/worldLow.js';
+import { ItensService } from 'src/app/services/itens.service.js';
+
 
 @Component({
   selector: 'app-default',
@@ -20,9 +23,16 @@ import '../../../../assets/charts/amchart/worldLow.js';
 })
 export class DefaultComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private itensService: ItensService) { }
+  valorTesteMudar: any;
+  
   ngOnInit() {
+   
+    //para cada card buscar valores da steam em tempo real?
+    this.itensService.getItemPrice().subscribe( (response:any) => {
+      this.valorTesteMudar = response
+    });
+    
     setTimeout(() => {
       const latlong = {};
       latlong['AU'] = {
