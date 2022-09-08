@@ -31,7 +31,7 @@ export class AuthSigninComponent implements OnInit {
 
   login(){
     console.log(this.form.get('email').value, this.form.get('password').value)
-    this.router.navigate(['/dashboard/default'])
+    this.router.navigate(['/dashboard/default', 55 ]);
     // if (this.form.get('email').value == this.emailDB && this.form.get('password').value == this.senhaDB) {
     //     this.mensagem = "Login feito com sucesso!";
     // } else {
