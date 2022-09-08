@@ -8,6 +8,10 @@ const routes: Routes = [
       {
         path: 'default',
         loadChildren: () => import('./default/default.module').then(m => m.DefaultModule)
+      },
+      { // caso fosse edição preenchido ou criação com parametro null
+        path: 'default/:id',
+        loadChildren: () => import('./default/default.module').then(m => m.DefaultModule)
       }
     ]
   }

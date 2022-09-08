@@ -14,6 +14,7 @@ import '../../../../assets/charts/amchart/usaLow.js';
 import '../../../../assets/charts/amchart/radar.js';
 import '../../../../assets/charts/amchart/worldLow.js';
 import { ItensService } from 'src/app/services/itens.service.js';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -23,10 +24,16 @@ import { ItensService } from 'src/app/services/itens.service.js';
 })
 export class DefaultComponent implements OnInit {
 
-  constructor(public itensService: ItensService) { }
+  constructor(public itensService: ItensService,  private route: ActivatedRoute,) { }
   valorTesteMudar: any;
   
   ngOnInit() { 
+    this.route.queryParams.subscribe(params => {
+      console.log(params['name']);
+    });
+
+    console.log(this.route.snapshot.paramMap.get("id"))
+
     this.itensService.atualizarLista();
     //para cada card buscar valores da steam em tempo real?
 
