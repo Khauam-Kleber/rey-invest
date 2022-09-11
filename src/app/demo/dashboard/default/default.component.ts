@@ -28,11 +28,11 @@ export class DefaultComponent implements OnInit {
   valorTesteMudar: any;
   
   ngOnInit() { 
-    this.route.queryParams.subscribe(params => {
-      console.log(params['name']);
-    });
+    // this.route.queryParams.subscribe(params => {
+    //   console.log(params['name']);
+    // });
 
-    console.log(this.route.snapshot.paramMap.get("id"))
+    // console.log(this.route.snapshot.paramMap.get("id"))
 
     this.itensService.atualizarLista();
     //para cada card buscar valores da steam em tempo real?

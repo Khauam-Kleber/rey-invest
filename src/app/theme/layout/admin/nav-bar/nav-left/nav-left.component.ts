@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-nav-left',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavLeftComponent implements OnInit {
 
-  constructor() { }
+  constructor(private usersService: UsersService) { }
 
+  nome; 
   ngOnInit() {
+    this.nome = this.usersService.userValue['data'].name
   }
 
 }

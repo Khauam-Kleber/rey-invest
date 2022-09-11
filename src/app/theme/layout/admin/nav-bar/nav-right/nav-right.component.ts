@@ -2,6 +2,7 @@ import {Component, DoCheck, OnInit} from '@angular/core';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {DattaConfig} from '../../../../../app-config';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-nav-right',
@@ -35,7 +36,7 @@ export class NavRightComponent implements OnInit, DoCheck {
   public friendId: boolean;
   public dattaConfig: any;
 
-  constructor(config: NgbDropdownConfig) {
+  constructor(config: NgbDropdownConfig, private userService: UsersService) {
     config.placement = 'bottom-right';
     this.visibleUserList = false;
     this.chatMessage = false;
@@ -43,6 +44,10 @@ export class NavRightComponent implements OnInit, DoCheck {
   }
 
   ngOnInit() {
+  }
+
+  logout(){
+    this.userService.logout();
   }
 
   onChatToggle(friend_id) {

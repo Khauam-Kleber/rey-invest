@@ -65,7 +65,7 @@
       <td mat-cell *matCellDef="let element"> {{element.marketPrice}} ({{element.marketPrice * 5.10 | number : '.2-2' }})  </td>
     </ng-container>
   
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="row.trendYearPercentage < '-50' && ((row.weeklySales / 7) / row.marketQuantity) * 100 > 40 ? 'fundo-verde' : ''"></tr>
   </table>
   
