@@ -74,7 +74,7 @@ export class ItensService {
     this.listFavoritesUser.forEach((item,index)=> {
       this.getItemPrice(item.name).subscribe( (response:any) => {
         // element.medianPrice = response.medianPrice
-        this.listFavoritesUser[index].medianPrice = response.median_price
+        this.listFavoritesUser[index].lowest_price = response.lowest_price
         this.listFavoritesUser[index].volume = response.volume
         // this.itensService.listFavoritesUser.u
      });

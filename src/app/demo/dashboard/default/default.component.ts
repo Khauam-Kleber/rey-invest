@@ -31,10 +31,6 @@ export class DefaultComponent implements OnInit {
   valorTesteMudar: any;
   
   // console.log(this.route.snapshot.paramMap.get("id"))
-
-
-  
-  
   ngOnInit() { 
     //para cada card buscar valores da steam em tempo real?
     this.itensService.buscarListaFavoritos(true);
