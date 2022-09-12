@@ -50,4 +50,37 @@ export class UsersService {
         return this.http.post(`${environment.apiUrl}/users`, user);
     }
 
+    getAll() {
+        return this.http.get<User[]>(`${environment.apiUrl}/users`);
+    }
+
+    getById(id: string) {
+        return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
+    }
+
+    getFavoritemsUser() {
+        return this.http.get<any>(`${environment.apiUrl}/users/find-favorites/${this.userValue['data'].id}`);
+    }
+
+    update(id, params) {
+        return this.http.put(`${environment.apiUrl}/users/${id}`, params)
+            .pipe(map(x => {
+                // update stored user if the logged in user updated their own record
+                // localStorage.setItem('user', JSON.stringify(user));
+                // if (id == this.userValue.id) {
+                //     const user = { ...this.userValue, ...params };
+                //     this.userSubject.next(user);
+                // }
+                return x;
+            }));
+    }
+
+    updateFavorites(id, params) {
+        return this.http.put(`${environment.apiUrl}/users/update-favorites/${id}`, params)
+            .pipe(map(x => {
+              
+                return x;
+            }));
+    }
+    
 }

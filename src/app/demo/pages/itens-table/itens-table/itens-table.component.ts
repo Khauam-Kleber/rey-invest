@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatSort, Sort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { SteamItem } from 'src/app/models/steamItem.model';
 import { ItensService } from 'src/app/services/itens.service';
+import { UsersService } from 'src/app/services/users.service';
 //https://steamcommunity.com/sharedfiles/filedetails/?id=2164283242 drop ativo de caixa
 @Component({
   selector: 'itens-table',
@@ -17,14 +19,13 @@ export class ItensTableComponent implements OnInit {
   name: string = '';
   tipoItemFiltro: any = 1;
   tiposItens = [{nome: 'Nada', value: 0}, {nome: 'Caixa', value: 1},  {nome: 'Capsula', value: 2}, {nome: 'Adesivo', value: 3},  {nome: 'Agentes', value: 4}]
-
   private sort = new MatSort();
   @ViewChild(MatSort) set matSort(ms: MatSort) {
     this.sort = ms;
     this.setDataSourceAttributes();
   }
   
-  constructor(private service:ItensService) {}
+  constructor(private service:ItensService, public itensService: ItensService) {}
  
 
   ngOnInit() {
@@ -36,6 +37,7 @@ export class ItensTableComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.itensService.buscarListaFavoritos();
     this.dataSource.sort = this.sort
   }
 
@@ -69,22 +71,34 @@ export class ItensTableComponent implements OnInit {
     return ''
   }
 
-  adicionarAosFavoritos(element){
-    if(this.verificarFavoritos(element) == false){
-      this.service.delete(element.id);
-    }else{
-      this.service.set(element);
-    }
   
-    this.service.atualizarLista();
-    // this.service.clear();
-  }
+  // adicionarOuRemoverFavoritos(itemSteam){
+  //   let usuarioLogado = this.userService.userValue['data']
 
-  verificarFavoritos(element){
-    if(this.service.favoritos && this.service.favoritos.find(e => e.id === element.id)){
-      return false;
-    }else{
-      return true;
-    }
-  }
+  //   if(!this.listFavoritesUser.find(item => item.id === itemSteam.id)){
+  //     this.listFavoritesUser.push(new SteamItem(itemSteam))
+  //   }else{
+  //     let objIndex = this.listFavoritesUser.findIndex((obj => obj.id == itemSteam.id));
+  //     this.listFavoritesUser.splice(objIndex, 1);
+  //   } 
+  //   usuarioLogado.steamItems = this.listFavoritesUser;
+  //   this.userService.updateFavorites(usuarioLogado.id, usuarioLogado).subscribe((response:any) =>  this.buscarListaFavoritos() );
+  // }
+
+  // buscarListaFavoritos(){
+  //   this.userService.getFavoritemsUser().subscribe(
+  //     response => {
+  //       this.listFavoritesUser = response;
+  //     },
+  //     error => {
+  //     });
+  // }
+
+  // verificarFavoritos(element){
+  //   if(this.listFavoritesUser && this.listFavoritesUser.find(e => e.id === element.id)){
+  //     return false;
+  //   }else{
+  //     return true;
+  //   }
+  // }
 }

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UsersService } from './users.service';
+import { SteamItem } from '../models/steamItem.model';
   
 @Injectable({
   providedIn: 'root'
@@ -7,23 +9,17 @@ import { HttpClient } from '@angular/common/http';
 export class ItensService {
   // private url = 'https://steamfolio.com/api/Popular/sort?type=10&ascending=false&watchlist=false&searchTerm=karrigan&filterType=3';
   
-  private storage: Storage;
-  public favoritos: any = [];
-  
-  constructor(private httpClient: HttpClient) {
-    this.storage = window.localStorage;
-    this.atualizarLista();
+  public listFavoritesUser = [];
+  constructor(private httpClient: HttpClient, private userService: UsersService) {
    }
 
-  atualizarLista(){
-    this.favoritos = this.get('favoritos');
-  }
+
 
   getItensMercadoSteam(nome:string, tipoItem:string){
     return this.httpClient.get('https://steamfolio.com/api/Popular/sort?type=2&ascending=false&watchlist=false&searchTerm='+nome+'&filterType='+tipoItem+'')
   }
 
-  getItemPrice ({ market_hash_name = 'AK-47 | Redline (Field-Tested)', appid = 730 } = {}) {
+  getItemPrice (market_hash_name = 'AK-47 | Redline (Field-Tested)', appid = 730) {
     // Type check the market_hash_name parameter for matching a string
     if (typeof market_hash_name !== 'string' || market_hash_name.length === 0) {
         // Throw an error in case the check failed
@@ -41,55 +37,47 @@ export class ItensService {
  
   }
 
-  //métodos storage
+  adicionarOuRemoverFavoritos(itemSteam){
+    let usuarioLogado = this.userService.userValue['data']
 
-  set(fav: any) {
-    if(fav.id == undefined){
-      fav.id = this.favoritos.length +1;
-    }
-
-    let objIndex = this.favoritos.findIndex((obj => obj.id == fav.id));
-    if(objIndex != -1 && objIndex != undefined && objIndex != null){
-      this.favoritos[objIndex] = fav;
-    }else{  
-      this.favoritos.push(fav);
-    }
-    
-    this.storage.setItem('favoritos', JSON.stringify(this.favoritos));
-    this.atualizarLista()
-}
-
-  get(key: string): any {
-    if (this.storage) {
-      const userJson = this.storage.getItem(key);
-      return userJson !== null ? JSON.parse(userJson) : [];
-    }
-    return [];
+    if(!this.listFavoritesUser.find(item => item.id === itemSteam.id)){
+      this.listFavoritesUser.push(new SteamItem(itemSteam))
+    }else{
+      let objIndex = this.listFavoritesUser.findIndex((obj => obj.id == itemSteam.id));
+      this.listFavoritesUser.splice(objIndex, 1);
+    } 
+    usuarioLogado.steamItems = this.listFavoritesUser;
+    this.userService.updateFavorites(usuarioLogado.id, usuarioLogado).subscribe((response:any) =>  this.buscarListaFavoritos() );
   }
 
-  remove(key: string): boolean {
-    if (this.storage) {
-      this.storage.removeItem(key);
+  buscarListaFavoritos(realTimePrice = false){
+    this.userService.getFavoritemsUser().subscribe(
+      response => {
+        this.listFavoritesUser = response;
+        if(realTimePrice){
+          this.realTimePrice();
+        }
+      },
+      error => {
+      });
+  }
+
+  verificarFavoritos(element){
+    if(this.listFavoritesUser && this.listFavoritesUser.find(e => e.id === element.id)){
+      return false;
+    }else{
       return true;
     }
-    return false;
   }
 
-  clear(): boolean {
-    if (this.storage) {
-      this.storage.clear();
-      return true;
-    }
-    return false;
+  realTimePrice(){
+    this.listFavoritesUser.forEach((item,index)=> {
+      this.getItemPrice(item.name).subscribe( (response:any) => {
+        // element.medianPrice = response.medianPrice
+        this.listFavoritesUser[index].medianPrice = response.median_price
+        this.listFavoritesUser[index].volume = response.volume
+        // this.itensService.listFavoritesUser.u
+     });
+    });
   }
-
-   delete(id: number) {
-    let objIndex = this.favoritos.findIndex((obj => obj.id == id));
-    if(objIndex != -1 && objIndex != undefined && objIndex != null){
-      this.favoritos.splice(objIndex, 1);
-    }
-    this.storage.setItem('favoritos', JSON.stringify(this.favoritos));
-  }
-
-
 }

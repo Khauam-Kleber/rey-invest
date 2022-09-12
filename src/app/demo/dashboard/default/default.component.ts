@@ -24,22 +24,22 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DefaultComponent implements OnInit {
 
-  constructor(public itensService: ItensService,  private route: ActivatedRoute,) { }
+  constructor(public itensService: ItensService,  private route: ActivatedRoute,) 
+  {    
+ 
+  }
   valorTesteMudar: any;
   
+  // console.log(this.route.snapshot.paramMap.get("id"))
+
+
+  
+  
   ngOnInit() { 
-    // this.route.queryParams.subscribe(params => {
-    //   console.log(params['name']);
-    // });
-
-    // console.log(this.route.snapshot.paramMap.get("id"))
-
-    this.itensService.atualizarLista();
     //para cada card buscar valores da steam em tempo real?
-
-    // this.itensService.getItemPrice().subscribe( (response:any) => {
-    //   this.valorTesteMudar = response
-    // });
+    this.itensService.buscarListaFavoritos(true);
+    console.log( this.itensService.listFavoritesUser)
+      
     
     setTimeout(() => {
       const latlong = {};

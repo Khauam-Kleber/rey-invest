@@ -9,8 +9,8 @@
     <ng-container matColumnDef="favoritar">
       <th mat-header-cell *matHeaderCellDef mat-sort-header > favoritar </th>
       <td mat-cell *matCellDef="let element" [ngClass]="verificarRaridadeCaixa(element.name)"> 
-        <button *ngIf="verificarFavoritos(element)" (click)="adicionarAosFavoritos(element)" type="button" class="btn btn-outline-primary"><i class="feather icon-thumbs-up"></i>Favoritar</button>
-        <button *ngIf="!verificarFavoritos(element)" (click)="adicionarAosFavoritos(element)" type="button" class="btn btn-outline-danger"><i class="feather icon-thumbs-down"></i>Desfavoritar</button>
+        <button *ngIf="itensService.verificarFavoritos(element)" (click)="itensService.adicionarOuRemoverFavoritos(element)" type="button" class="btn btn-outline-primary"><i class="feather icon-thumbs-up"></i>Favoritar</button>
+        <button *ngIf="!itensService.verificarFavoritos(element)" (click)="itensService.adicionarOuRemoverFavoritos(element)" type="button" class="btn btn-outline-danger"><i class="feather icon-thumbs-down"></i>Desfavoritar</button>
       </td>
     </ng-container>
 
