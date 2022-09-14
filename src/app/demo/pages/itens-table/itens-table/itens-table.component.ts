@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatSort, Sort} from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Observable } from 'rxjs';
 import { SteamItem } from 'src/app/models/steamItem.model';
 import { ItensService } from 'src/app/services/itens.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -16,7 +17,7 @@ export class ItensTableComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
   playerName: string = '';
-  name: string = '';
+  term: string = '';
   tipoItemFiltro: any = 1;
   tiposItens = [{nome: 'Nada', value: 0}, {nome: 'Caixa', value: 1},  {nome: 'Capsula', value: 2}, {nome: 'Adesivo', value: 3},  {nome: 'Agentes', value: 4}]
   private sort = new MatSort();
@@ -43,7 +44,7 @@ export class ItensTableComponent implements OnInit {
 
 
   fazBuscaItens(){
-    this.service.getItensMercadoSteam(this.name, this.tipoItemFiltro).subscribe((response:any) => this.dataSource = new MatTableDataSource(response['data']) );
+    this.service.getItensMercadoSteam2(this.term, this.tipoItemFiltro).subscribe((response:any) => this.dataSource = new MatTableDataSource(response['data']) );
     this.dataSource.sort = this.sort;  
 
     setTimeout(() => {
@@ -71,34 +72,6 @@ export class ItensTableComponent implements OnInit {
     return ''
   }
 
-  
-  // adicionarOuRemoverFavoritos(itemSteam){
-  //   let usuarioLogado = this.userService.userValue['data']
 
-  //   if(!this.listFavoritesUser.find(item => item.id === itemSteam.id)){
-  //     this.listFavoritesUser.push(new SteamItem(itemSteam))
-  //   }else{
-  //     let objIndex = this.listFavoritesUser.findIndex((obj => obj.id == itemSteam.id));
-  //     this.listFavoritesUser.splice(objIndex, 1);
-  //   } 
-  //   usuarioLogado.steamItems = this.listFavoritesUser;
-  //   this.userService.updateFavorites(usuarioLogado.id, usuarioLogado).subscribe((response:any) =>  this.buscarListaFavoritos() );
-  // }
 
-  // buscarListaFavoritos(){
-  //   this.userService.getFavoritemsUser().subscribe(
-  //     response => {
-  //       this.listFavoritesUser = response;
-  //     },
-  //     error => {
-  //     });
-  // }
-
-  // verificarFavoritos(element){
-  //   if(this.listFavoritesUser && this.listFavoritesUser.find(e => e.id === element.id)){
-  //     return false;
-  //   }else{
-  //     return true;
-  //   }
-  // }
 }

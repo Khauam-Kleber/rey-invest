@@ -1,5 +1,5 @@
 <div class="width100" style="display:flex"> 
-    <input [(ngModel)]="name" #ctrl="ngModel"  (keydown)="fazBuscaItens()" class="width50 espacamento"> 
+    <input [(ngModel)]="term" #ctrl="ngModel"  (keydown)="fazBuscaItens()" class="width50 espacamento"> 
   
     <select name="tipoItem" [(ngModel)]="tipoItemFiltro" class="width25" (change)="fazBuscaItens()"> 
       <option *ngFor="let tipoItem of tiposItens" [value]="tipoItem.value">{{tipoItem.nome}}</option> 

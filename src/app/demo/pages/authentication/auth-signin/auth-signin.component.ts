@@ -66,7 +66,7 @@ export class AuthSigninComponent implements OnInit {
                 // this.alertService.error(error);
                 // this.loading = false;
             }
-        });
+        }, );
   }
  
 }

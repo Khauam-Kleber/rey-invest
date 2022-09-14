@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { UsersService } from './users.service';
 import { SteamItem } from '../models/steamItem.model';
-  
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,22 +20,24 @@ export class ItensService {
     return this.httpClient.get('https://steamfolio.com/api/Popular/sort?type=2&ascending=false&watchlist=false&searchTerm='+nome+'&filterType='+tipoItem+'')
   }
 
-  getItemPrice (market_hash_name = 'AK-47 | Redline (Field-Tested)', appid = 730) {
+  getItensMercadoSteam2(term:string, tipoItem:string){
+    return this.httpClient.get(`${environment.apiUrl}/skin-item/find-skins/list`, {params: {
+      term: term,
+      tipoItem: tipoItem
+    },})
+  }
+
+  getItemPrice (market_hash_name = 'AK-47 | Redline (Field-Tested)') {
     // Type check the market_hash_name parameter for matching a string
     if (typeof market_hash_name !== 'string' || market_hash_name.length === 0) {
         // Throw an error in case the check failed
         throw new Error('The "market_hash_name" parameter is not a valid string or missing.');
     }
 
-    // Type check the appid parameter for matching a number
-    if (typeof appid !== 'number') {
-        // Throw an error in case the check failed
-        throw new Error('The "appid" parameter is not a number or missing.');
-    }
-
     // Encode the Steam Community Market endpoint for handling items with unique characters in their market_hash_name
-    return this.httpClient.get(`http://steamcommunity.com/market/priceoverview/?market_hash_name=${market_hash_name}&appid=${appid}&currency=7`)
- 
+    // key=AC4B3A7F4D3CCBE117005075A3C23693
+    // return this.httpClient.get(`http://steamcommunity.com/market/priceoverview/?market_hash_name=${market_hash_name}&appid=730&currency=7`)
+       return this.httpClient.get(`https://csgobackpack.net/api/GetItemPrice/?currency=BRL&id=${market_hash_name}&time=7&icon=1`)
   }
 
   adicionarOuRemoverFavoritos(itemSteam){
@@ -72,12 +75,16 @@ export class ItensService {
 
   realTimePrice(){
     this.listFavoritesUser.forEach((item,index)=> {
-      this.getItemPrice(item.name).subscribe( (response:any) => {
-        // element.medianPrice = response.medianPrice
+      this.getByName(item.name).subscribe( (response:any) => {
         this.listFavoritesUser[index].lowest_price = response.lowest_price
         this.listFavoritesUser[index].volume = response.volume
-        // this.itensService.listFavoritesUser.u
      });
     });
   }
+
+
+  getByName(name: string) {
+    return this.httpClient.get<any>(`${environment.apiUrl}/skin-item/skin-price/${name}`);
+  }
+
 }
