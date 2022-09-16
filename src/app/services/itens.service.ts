@@ -21,10 +21,13 @@ export class ItensService {
   }
 
   getItensMercadoSteam2(term:string, tipoItem:string){
-    return this.httpClient.get(`${environment.apiUrl}/skin-item/find-skins/list`, {params: {
-      term: term,
-      tipoItem: tipoItem
-    },})
+    return this.httpClient.get(`${environment.apiUrl}/skin-item/find-skins/list`, 
+      {params: 
+        {
+        term: term,
+        tipoItem: tipoItem
+        }
+      })
   }
 
   getItemPrice (market_hash_name = 'AK-47 | Redline (Field-Tested)') {

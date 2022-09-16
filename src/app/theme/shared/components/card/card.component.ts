@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NgbDropdownConfig} from '@ng-bootstrap/ng-bootstrap';
 /*import {AnimationBuilder, AnimationService} from 'css-animator';*/
 import {animate, AUTO_STYLE, state, style, transition, trigger} from '@angular/animations';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -40,6 +41,8 @@ import {animate, AUTO_STYLE, state, style, transition, trigger} from '@angular/a
 })
 
 export class CardComponent implements OnInit {
+  @Output() newItemEvent = new EventEmitter<string>();
+
   @Input() cardTitle: string;
   @Input() cardClass: string;
   @Input() blockClass: string;
@@ -47,6 +50,8 @@ export class CardComponent implements OnInit {
   @Input() options: boolean;
   @Input() hidHeader: boolean;
   @Input() customHeader: boolean;
+  @Input() item: any;
+
 
   public animation: string;
   public fullIcon: string;
@@ -135,7 +140,11 @@ export class CardComponent implements OnInit {
   }
 
   cardRemoveAction() {
-    this.cardRemove = this.cardRemove === 'closed' ? 'open' : 'closed';
+    if(this.item){
+      this.newItemEvent.emit(this.item);
+    }
+   
+    // this.cardRemove = this.cardRemove === 'closed' ? 'open' : 'closed';
   }
 
 }

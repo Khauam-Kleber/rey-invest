@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpRequest } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user.model';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -32,12 +32,43 @@ export class UsersService {
     return this.http.post<User>(`${environment.apiUrl}/users/login`, { email, password })
         .pipe(map(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
-            this.userSubject.next(user);
+            // localStorage.setItem('user', JSON.stringify(user));
+            // this.userSubject.next(user);
+            this.updateCurrentUser(user);
             return user;
         }));
     }
 
+    // refreshToken(){
+    //     let oldToken = this.userValue.access_token
+    //     const options ={
+    //       param: "oldToken", oldToken,
+    //       withCredentials: true
+    //     };
+
+    //     return this.http.get(`${environment.apiUrl}/token/refresh`,
+    //     {
+    //         params: {
+    //             oldToken: this.userValue.access_token,
+    //          }
+    //     })
+    //     .pipe(
+    //         map(result => {
+    //             console.log(result['access_token'])
+    //             if(result['access_token']){
+    //                 console.log(result)
+    //                 this.updateCurrentUser(result);
+    //             }else{ 
+    //                 this.logout();
+    //             }
+    //         })
+    //     );
+    // }
+
+    updateCurrentUser(user){
+        localStorage.setItem('user', JSON.stringify(user));
+        this.userSubject.next(user);
+    }
     logout() {
         // remove user from local storage and set current user to null
         localStorage.removeItem('user');

@@ -6,5 +6,5 @@ export class User {
     password: string;
     email: string;
     steamItems: SteamItem[];
-    token: string;
+    access_token: string;
 }

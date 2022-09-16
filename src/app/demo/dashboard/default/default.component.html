@@ -4,8 +4,8 @@
 <div class="row">
   <div  *ngFor="let item of itensService.listFavoritesUser" class="col-md-6 col-xl-4">
     <!--  -->
-    <app-card [hidHeader]="true"> 
-        <h4 class="mb-4  text-center" >{{item.name}}</h4>
+    <app-card [hidHeader]="false" [cardTitle]="item.name" [item]="item" (newItemEvent)="teste($event)" > 
+        <!-- <h4 class="mb-4  text-center" >{{item.name}}</h4> -->
         <div class="column d-flex align-items-left">
           <div class="col-8">
             <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>{{item.lowest_price}}</h3>
