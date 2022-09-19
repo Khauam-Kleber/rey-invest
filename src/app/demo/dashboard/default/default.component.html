@@ -1,23 +1,33 @@
+
 <div class="div-refresh">
   <i class="feather icon-refresh-cw icon-refresh" (click)="this.itensService.buscarListaFavoritos(true)"></i>
+  <h3 class="mb-4 text-center rendimento" >Rendimento Total: R$ {{itensService.valorRendimentoTotal | number : '.2-2'}}</h3> 
 </div>
 <div class="row">
   <div  *ngFor="let item of itensService.listFavoritesUser" class="col-md-6 col-xl-4">
     <!--  -->
-    <app-card [hidHeader]="false" [cardTitle]="item.name" [item]="item" (newItemEvent)="teste($event)" > 
+    <app-card [hidHeader]="false" [cardTitle]="item.name" [item]="item" (editItemEvent)="dialogEditItem($event)"  (removeItemEvent)="removeItemCard($event)"> 
         <!-- <h4 class="mb-4  text-center" >{{item.name}}</h4> -->
         <div class="column d-flex align-items-left">
-          <div class="col-8">
-            <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>{{item.lowest_price}}</h3>
+          <div class="col-4">
+            <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-shopping-cart text-c-blue f-30 m-r-10"></i>{{item.lowest_price}}</h3>
             <div class="col-8 text-left">
               <p class="m-b-0">Preço</p>
             </div>
           </div>
-          
-          <div class="col-9">
-            <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-down text-c-red f-30 m-r-10"></i>{{item.volume}}</h3>
+
+          <div class="col-4">
+            <h3 *ngIf="item.pricePurchased" class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-target text-c-green f-30 m-r-10"></i>{{(item.lowest_price - item.pricePurchased) * item.quantityPurchased | number : '.2-2'}}</h3>
+            <h3  *ngIf="!item.pricePurchased" class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-target text-c-green f-30 m-r-10"></i>N/A</h3>
             <div class="col-8 text-left">
-              <p class="m-b-0">Volume</p>
+              <p class="m-b-0">Lucro</p>
+            </div>
+          </div>
+          
+          <div class="col-4">
+            <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-activity text-c-red f-30 m-r-10"></i>{{item.volume}}</h3>
+            <div class="col-10 text-left">
+              <p class="m-b-0">Volume 24h</p>
             </div>
           </div>
         </div>

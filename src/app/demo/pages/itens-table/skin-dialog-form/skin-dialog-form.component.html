@@ -1,0 +1,18 @@
+<!-- <h1 mat-dialog-title>Hi {{data.name}}</h1> -->
+<div mat-dialog-content>
+  <p>Coloque a Quantidade e Preço da compra dos itens</p>
+  <form [formGroup]="form" (ngSubmit)="saveQuantityPurchase()" > 
+    <div class="input-group mb-3">
+      <input type="number"  id="quantity" formControlName="quantity" class="form-control" placeholder="Quantity">
+    </div>
+    <div class="input-group mb-3">
+      <input type="number" step="0.01" id="price" formControlName="price" class="form-control" placeholder="Price">
+    </div>
+    <button  class="btn btn-primary mb-4" type="submit" >
+      Salvar</button>
+  </form>
+</div>
+<!-- <div mat-dialog-actions> -->
+  <!-- <button mat-button (click)="onNoClick()">No Thanks</button> -->
+  <!-- <button mat-button cdkFocusInitial>Ok</button> -->
+<!-- </div> -->

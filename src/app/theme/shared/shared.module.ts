@@ -15,6 +15,7 @@ import {MatSortModule} from '@angular/material/sort';
 import 'hammerjs';
 import 'mousetrap';
 import {GalleryModule} from '@ks89/angular-modal-gallery';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -34,6 +35,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ClickOutsideModule,
     MatTableModule,
     MatSortModule,
+    MatDialogModule 
   ],
   exports: [
     CommonModule,
@@ -52,6 +54,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SpinnerComponent,
     MatTableModule,
     MatSortModule,
+    MatDialogModule 
   ],
   declarations: [
     DataFilterPipe,

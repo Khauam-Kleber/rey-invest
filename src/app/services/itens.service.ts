@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { SteamItem } from '../models/steamItem.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,8 @@ export class ItensService {
   // private url = 'https://steamfolio.com/api/Popular/sort?type=10&ascending=false&watchlist=false&searchTerm=karrigan&filterType=3';
   
   public listFavoritesUser = [];
+  public valorRendimentoTotal: number = 0;
+
   constructor(private httpClient: HttpClient, private userService: UsersService) {
    }
 
@@ -56,6 +59,15 @@ export class ItensService {
     this.userService.updateFavorites(usuarioLogado.id, usuarioLogado).subscribe((response:any) =>  this.buscarListaFavoritos() );
   }
 
+  atualizarQuantidadeFavoritos(itemSteam){
+    let usuarioLogado = this.userService.userValue['data']
+    let itemIndex = this.listFavoritesUser.findIndex(item => item.id === itemSteam.id)
+    this.listFavoritesUser[itemIndex] = itemSteam;
+
+    usuarioLogado.steamItems = this.listFavoritesUser;
+    this.userService.updateFavorites(usuarioLogado.id, usuarioLogado).subscribe((response:any) =>  this.buscarListaFavoritos() );
+  }
+
   buscarListaFavoritos(realTimePrice = false){
     this.userService.getFavoritemsUser().subscribe(
       response => {
@@ -63,6 +75,8 @@ export class ItensService {
         if(realTimePrice){
           this.realTimePrice();
         }
+
+       
       },
       error => {
       });
@@ -79,7 +93,8 @@ export class ItensService {
   realTimePrice(){
     this.listFavoritesUser.forEach((item,index)=> {
       this.getByName(item.name).subscribe( (response:any) => {
-        this.listFavoritesUser[index].lowest_price = response.lowest_price
+        this.listFavoritesUser[index].lowest_price = response.lowest_price.replace(/[^0-9\.,]/g, "").replace(/,/g, '.')
+        this.valorRendimentoTotal = this.valorRendimentoTotal + ((parseFloat(this.listFavoritesUser[index].lowest_price) - item.pricePurchased) * item.quantityPurchased);
         this.listFavoritesUser[index].volume = response.volume
      });
     });

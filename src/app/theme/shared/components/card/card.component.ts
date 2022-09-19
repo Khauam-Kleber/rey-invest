@@ -41,7 +41,9 @@ import { Output, EventEmitter } from '@angular/core';
 })
 
 export class CardComponent implements OnInit {
-  @Output() newItemEvent = new EventEmitter<string>();
+  @Output() removeItemEvent = new EventEmitter<string>();
+  @Output() editItemEvent = new EventEmitter<string>();
+
 
   @Input() cardTitle: string;
   @Input() cardClass: string;
@@ -141,10 +143,16 @@ export class CardComponent implements OnInit {
 
   cardRemoveAction() {
     if(this.item){
-      this.newItemEvent.emit(this.item);
+      this.removeItemEvent.emit(this.item);
     }
    
     // this.cardRemove = this.cardRemove === 'closed' ? 'open' : 'closed';
+  }
+
+  cardEditAction() {
+    if(this.item){
+      this.editItemEvent.emit(this.item);
+    }
   }
 
 }

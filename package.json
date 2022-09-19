@@ -33,6 +33,7 @@
     "morris.js": "^0.5.0",
     "mousetrap": "^1.6.2",
     "ng-click-outside": "^4.0.0",
+    "ngx-mask": "^14.2.3",
     "ngx-perfect-scrollbar": "^6.3.1",
     "node-sass": "^4.14.1",
     "raphael": "^2.3.0",
