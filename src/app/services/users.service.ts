@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHandler, HttpRequest } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user.model';
-import { map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -31,9 +31,6 @@ export class UsersService {
    login(email, password) {
     return this.http.post<User>(`${environment.apiUrl}/users/login`, { email, password })
         .pipe(map(user => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            // localStorage.setItem('user', JSON.stringify(user));
-            // this.userSubject.next(user);
             this.updateCurrentUser(user);
             return user;
         }));
@@ -78,7 +75,7 @@ export class UsersService {
 
     
     create(user: User) {
-        return this.http.post(`${environment.apiUrl}/users`, user);
+        return this.http.post<any>(`${environment.apiUrl}/users`, user)
     }
 
     getAll() {
@@ -96,12 +93,6 @@ export class UsersService {
     update(id, params) {
         return this.http.put(`${environment.apiUrl}/users/${id}`, params)
             .pipe(map(x => {
-                // update stored user if the logged in user updated their own record
-                // localStorage.setItem('user', JSON.stringify(user));
-                // if (id == this.userValue.id) {
-                //     const user = { ...this.userValue, ...params };
-                //     this.userSubject.next(user);
-                // }
                 return x;
             }));
     }

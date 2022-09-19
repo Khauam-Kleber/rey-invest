@@ -39,6 +39,7 @@ export class DefaultComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.itensService.buscarListaFavoritos(true);
       // console.log('The dialog was closed ' + result);
     });
   }

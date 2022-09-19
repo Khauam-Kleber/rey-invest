@@ -55,14 +55,12 @@ export class AuthSigninComponent implements OnInit {
     this.usersService.login(this.form.get('email').value, this.form.get('password').value)
         .pipe(first())
         .subscribe({
-            next: () => {
-                // get return url from query parameters or default to home page
-                // console.log(this.usersService.userValue['data'].email)
-                const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard/default';
-                this.router.navigateByUrl(returnUrl);
-                // this.router.navigate(['/dashboard/default']);
+            next: (res) => {
+              const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard/default';
+              this.router.navigateByUrl(returnUrl);
             },
             error: error => {
+                console.log(error)
                 // this.alertService.error(error);
                 // this.loading = false;
             }

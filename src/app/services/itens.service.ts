@@ -91,6 +91,7 @@ export class ItensService {
   }
 
   realTimePrice(){
+    this.valorRendimentoTotal = 0;
     this.listFavoritesUser.forEach((item,index)=> {
       this.getByName(item.name).subscribe( (response:any) => {
         this.listFavoritesUser[index].lowest_price = response.lowest_price.replace(/[^0-9\.,]/g, "").replace(/,/g, '.')

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs/operators';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -20,7 +21,8 @@ export class AuthSignupComponent implements OnInit {
       private route: ActivatedRoute,
       private router: Router,
       private usersService: UsersService,
-      // private alertService: AlertService
+      private toastr: ToastrService
+    //   private alertService: AlertService
   ) {
       // redirect to home if already logged in
       if (this.usersService.userValue) {
@@ -55,11 +57,22 @@ export class AuthSignupComponent implements OnInit {
         .pipe(first())
         .subscribe(
             data => {
+                if(data.status === 403){
+                    console.log(data.status)
+                    this.loading = false;
+                    this.toastr.error('Erro!', 'Email já cadastrado', {
+                        positionClass: "toast-top-center",
+                      });
+
+                }else{
+                    this.router.navigate(['auth/signin']);
+                }
                 // this.alertService.success('Registration successful', { keepAfterRouteChange: true });
-                this.router.navigate(['auth/signin']);
+             
             },
             error => {
                 // this.alertService.error(error);
+                console.log(error)
                 this.loading = false;
             });
   }

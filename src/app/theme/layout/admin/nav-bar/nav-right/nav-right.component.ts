@@ -36,7 +36,7 @@ export class NavRightComponent implements OnInit, DoCheck {
   public friendId: boolean;
   public dattaConfig: any;
 
-  constructor(config: NgbDropdownConfig, private userService: UsersService) {
+  constructor(config: NgbDropdownConfig, public userService: UsersService) {
     config.placement = 'bottom-right';
     this.visibleUserList = false;
     this.chatMessage = false;

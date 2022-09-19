@@ -25,6 +25,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ItensService } from './services/itens.service';
 import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
     NavSearchComponent,
     NavRightComponent,
     ConfigurationComponent,
+  
   ],
   imports: [
     BrowserAnimationsModule,
@@ -53,7 +55,8 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
     NgbTooltipModule,
     NgbButtonsModule,
     NgbTabsetModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [
     NavigationItem, 
