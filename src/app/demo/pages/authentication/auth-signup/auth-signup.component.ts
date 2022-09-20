@@ -61,16 +61,17 @@ export class AuthSignupComponent implements OnInit {
                     this.loading = false;
                     this.toastr.error('Erro!', 'Email já cadastrado', {
                         positionClass: "toast-top-center",
-                      });
+                    });
 
                 }else{
+                    this.toastr.success('Faça o login!', 'Cadastrado com Sucesso', {
+                        positionClass: "toast-top-center",
+                    });
                     this.router.navigate(['auth/signin']);
                 }
-                // this.alertService.success('Registration successful', { keepAfterRouteChange: true });
              
             },
             error => {
-                // this.alertService.error(error);
                 console.log(error)
                 this.loading = false;
             });

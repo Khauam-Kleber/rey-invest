@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHandler, HttpRequest } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user.model';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -12,8 +12,6 @@ import { Router } from '@angular/router';
 export class UsersService {
     private userSubject: BehaviorSubject<User>;
     public user: Observable<User>;
-
-    private storage: Storage;
     public favoritos: any = [];
   
     constructor(
@@ -66,6 +64,7 @@ export class UsersService {
         localStorage.setItem('user', JSON.stringify(user));
         this.userSubject.next(user);
     }
+
     logout() {
         // remove user from local storage and set current user to null
         localStorage.removeItem('user');
@@ -73,7 +72,6 @@ export class UsersService {
         this.router.navigate(['/auth/signin']);
     }
 
-    
     create(user: User) {
         return this.http.post<any>(`${environment.apiUrl}/users`, user)
     }

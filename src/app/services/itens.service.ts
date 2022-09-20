@@ -4,6 +4,7 @@ import { SteamItem } from '../models/steamItem.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,7 @@ export class ItensService {
   public listFavoritesUser = [];
   public valorRendimentoTotal: number = 0;
 
-  constructor(private httpClient: HttpClient, private userService: UsersService) {
-   }
+  constructor(private httpClient: HttpClient, private userService: UsersService, private toastr: ToastrService) {}
 
 
 
@@ -47,16 +47,25 @@ export class ItensService {
   }
 
   adicionarOuRemoverFavoritos(itemSteam){
-    let usuarioLogado = this.userService.userValue['data']
+   
+      let usuarioLogado = this.userService.userValue['data']
 
-    if(!this.listFavoritesUser.find(item => item.id === itemSteam.id)){
-      this.listFavoritesUser.push(new SteamItem(itemSteam))
-    }else{
-      let objIndex = this.listFavoritesUser.findIndex((obj => obj.id == itemSteam.id));
-      this.listFavoritesUser.splice(objIndex, 1);
-    } 
-    usuarioLogado.steamItems = this.listFavoritesUser;
-    this.userService.updateFavorites(usuarioLogado.id, usuarioLogado).subscribe((response:any) =>  this.buscarListaFavoritos() );
+      if(!this.listFavoritesUser.find(item => item.id === itemSteam.id)){
+        if(this.listFavoritesUser.length <= 5){
+          this.listFavoritesUser.push(new SteamItem(itemSteam))
+        }else{
+          this.toastr.error('Usamos API Públicas grátis que possuem limites de buscas :(', 'Máximo 6 Itens Favoritos', {
+            positionClass: "toast-top-center",
+          });
+        }
+      }else{
+        let objIndex = this.listFavoritesUser.findIndex((obj => obj.id == itemSteam.id));
+        this.listFavoritesUser.splice(objIndex, 1);
+      } 
+      usuarioLogado.steamItems = this.listFavoritesUser;
+      this.userService.updateFavorites(usuarioLogado.id, usuarioLogado).subscribe((response:any) =>  this.buscarListaFavoritos() );
+    
+
   }
 
   atualizarQuantidadeFavoritos(itemSteam){
