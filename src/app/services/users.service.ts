@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { User } from '../models/user.model';
-import { map } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -28,10 +28,17 @@ export class UsersService {
 
    login(email, password) {
     return this.http.post<User>(`${environment.apiUrl}/users/login`, { email, password })
-        .pipe(map(user => {
-            this.updateCurrentUser(user);
-            return user;
+        .pipe(
+            // catchError(
+            //     (error) => {
+            //         console.log(error)
+            //       return of(error);
+            // }),
+            map(res => {
+            this.updateCurrentUser(res);
+            return res;
         }));
+        
     }
 
     // refreshToken(){
