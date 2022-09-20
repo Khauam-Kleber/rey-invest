@@ -42,10 +42,6 @@ export class AuthSigninComponent implements OnInit {
 
   login(){
     this.submitted = true;
-    console.log(this.form.get('email').value, this.form.get('password').value)
-    // this.router.navigate(['/dashboard/default', 55 ]);
-   
-
      // stop here if form is invalid
     if (this.form.invalid) {
         return;

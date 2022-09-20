@@ -58,7 +58,6 @@ export class AuthSignupComponent implements OnInit {
         .subscribe(
             data => {
                 if(data.status === 403){
-                    console.log(data.status)
                     this.loading = false;
                     this.toastr.error('Erro!', 'Email já cadastrado', {
                         positionClass: "toast-top-center",

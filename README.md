@@ -1,4 +1,14 @@
-# NgDattaAble
+# Sistema para Estudo;
+
+ Sistema criado por https://www.linkedin.com/in/khauam/ como forma de estudo das ferramentas Angular + NestJs + MongoDB
+ 
+ Trata-se de um sistema de monitoramento de investimento feito no mercado da STEAM onde as skins/adesivos/caixas tem um rendimento significativo ao longo dos anos, temos uma tabela principal que podemos acessar todos os itens do mercado e verificar sua variação de preço diario/mensal/anual alem de poder acompanhar a oferta e demanda dos menos para uma análise mais precisa, nessa tabela podemos selecionar os itens favoritos que aparecerão no dashboard principal onde podemos colocar a quantidade e o preço que o item foi comprado e assim acompanhar tmb o rendimento pessoal do investidor;
+
+Como uso API's Publicas grátis o numero de itens do dashboard é limitado para não gerar erros de timeout;
+
+Demo: https://rey-invest.herokuapp.com/ vai funcionar ate novembro de 2022 pois o herokuapp não vai deixar mais hospedar de graça. 
+
+# NgDattaAble TEMA
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.2.
 
