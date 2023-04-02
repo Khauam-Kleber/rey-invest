@@ -1,3 +1,4 @@
+{{loading}}
 <div class="card" [ngClass]="cardClass" [@cardRemove]="cardRemove" #toAnimate > <!-- animates animatesInitMode="show" [animatesOnInit]="{useVisibility: false, disabled: true}" -->
   <div class="card-header" *ngIf="!hidHeader" [ngClass]="headerClass">
     <h5 *ngIf="!customHeader">{{ cardTitle }}</h5>

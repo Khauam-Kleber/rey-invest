@@ -44,7 +44,7 @@ export class ItensTableComponent implements OnInit {
 
 
   fazBuscaItens(){
-    this.service.getItensMercadoSteam2(this.term, this.tipoItemFiltro).subscribe((response:any) => this.dataSource = new MatTableDataSource(response['data']) );
+    this.service.getItensMercadoSteam2(this.term, this.tipoItemFiltro).subscribe((response:any) => this.dataSource = new MatTableDataSource(response['data']['items']) );
     this.dataSource.sort = this.sort;  
 
     setTimeout(() => {

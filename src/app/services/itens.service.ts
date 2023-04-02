@@ -14,7 +14,7 @@ export class ItensService {
   
   public listFavoritesUser = [];
   public valorRendimentoTotal: number = 0;
-
+  public valorGastoTotal: number = 0;
   constructor(private httpClient: HttpClient, private userService: UsersService, private toastr: ToastrService) {}
 
 
@@ -51,13 +51,13 @@ export class ItensService {
       let usuarioLogado = this.userService.userValue['data']
 
       if(!this.listFavoritesUser.find(item => item.id === itemSteam.id)){
-        if(this.listFavoritesUser.length <= 5){
+        // if(this.listFavoritesUser.length <= 5){
           this.listFavoritesUser.push(new SteamItem(itemSteam))
-        }else{
-          this.toastr.error('Usamos API Públicas grátis que possuem limites de buscas :(', 'Máximo 6 Itens Favoritos', {
-            positionClass: "toast-top-center",
-          });
-        }
+        // }else{
+        //   this.toastr.error('Usamos API Públicas grátis que possuem limites de buscas :(', 'Máximo 6 Itens Favoritos', {
+        //     positionClass: "toast-top-center",
+        //   });
+        // }
       }else{
         let objIndex = this.listFavoritesUser.findIndex((obj => obj.id == itemSteam.id));
         this.listFavoritesUser.splice(objIndex, 1);
@@ -84,8 +84,6 @@ export class ItensService {
         if(realTimePrice){
           this.realTimePrice();
         }
-
-       
       },
       error => {
       });
@@ -101,11 +99,15 @@ export class ItensService {
 
   realTimePrice(){
     this.valorRendimentoTotal = 0;
+    this.valorGastoTotal = 0;
     this.listFavoritesUser.forEach((item,index)=> {
+      this.listFavoritesUser[index].loading = true;
       this.getByName(item.name).subscribe( (response:any) => {
-        this.listFavoritesUser[index].lowest_price = response.lowest_price.replace(/[^0-9\.,]/g, "").replace(/,/g, '.')
+        this.listFavoritesUser[index].lowest_price = (response.data.item.safePrice * 5.10).toFixed(2).toString() //response.lowest_price.replace(/[^0-9\.,]/g, "").replace(/,/g, '.')
         this.valorRendimentoTotal = this.valorRendimentoTotal + ((parseFloat(this.listFavoritesUser[index].lowest_price) - item.pricePurchased) * item.quantityPurchased);
-        this.listFavoritesUser[index].volume = response.volume
+        this.valorGastoTotal += item.pricePurchased * item.quantityPurchased;
+        this.listFavoritesUser[index].volume = response.data.item.volumeDay.toFixed(0);;
+        this.listFavoritesUser[index].loading = false;
      });
     });
   }

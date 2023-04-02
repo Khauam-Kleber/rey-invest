@@ -53,6 +53,8 @@ export class CardComponent implements OnInit {
   @Input() hidHeader: boolean;
   @Input() customHeader: boolean;
   @Input() item: any;
+  @Input() loading: boolean = true;
+
 
 
   public animation: string;
@@ -93,6 +95,17 @@ export class CardComponent implements OnInit {
     if (!this.options || this.hidHeader || this.customHeader) {
       this.collapsedCard = 'false';
     }
+
+    setInterval( () => {
+      console.log(this.loading, this.cardTitle)
+      if(this.loading){
+        this.loadCard = true;
+        this.cardClass = 'card-load';
+      }else{
+        this.loadCard = false;
+        this.cardClass = 'expanded';
+      }
+    }, 3000);
   }
 
   public fullCardToggle(element: HTMLElement, animation: string, status: boolean) {
@@ -133,12 +146,13 @@ export class CardComponent implements OnInit {
   }
 
   cardRefresh() {
-    this.loadCard = true;
-    this.cardClass = 'card-load';
-    setTimeout( () => {
+    if(this.loading){
+      this.loadCard = true;
+      this.cardClass = 'card-load';
+    }else{
       this.loadCard = false;
       this.cardClass = 'expanded';
-    }, 3000);
+    }
   }
 
   cardRemoveAction() {

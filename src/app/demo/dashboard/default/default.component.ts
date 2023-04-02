@@ -20,12 +20,7 @@ export class DefaultComponent implements OnInit {
   // console.log(this.route.snapshot.paramMap.get("id"))
   ngOnInit() { 
     //para cada card buscar valores da steam em tempo real?
-  
     this.itensService.buscarListaFavoritos(true);
-
-    // setTimeout(() => {
-     
-    // }, 5000);
   }
 
   removeItemCard(event){
