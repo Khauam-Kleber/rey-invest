@@ -23,14 +23,26 @@ export class ItensService {
     return this.httpClient.get('https://steamfolio.com/api/Popular/sort?type=2&ascending=false&watchlist=false&searchTerm='+nome+'&filterType='+tipoItem+'')
   }
 
-  getItensMercadoSteam2(term:string, tipoItem:string){
-    return this.httpClient.get(`${environment.apiUrl}/skin-item/find-skins/list`, 
-      {params: 
-        {
-        term: term,
-        tipoItem: tipoItem
-        }
-      })
+  findAllLiveEvents(term:string, tipoItem:string){
+    return this.httpClient.get(`${environment.apiUrl}/event/find-events/live`, 
+      // {params: 
+      //   {
+      //   term: term,
+      //   tipoItem: tipoItem
+      //   }
+      // }
+    )
+  }
+
+  findAllLiveOdds(term:string, tipoItem:string){
+    return this.httpClient.get(`${environment.apiUrl}/event/find-odds/live`, 
+      // {params: 
+      //   {
+      //   term: term,
+      //   tipoItem: tipoItem
+      //   }
+      // }
+    )
   }
 
   getItemPrice (market_hash_name = 'AK-47 | Redline (Field-Tested)') {

@@ -13,13 +13,14 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class ItensTableComponent implements OnInit {
   
-  displayedColumns: string[] = ['favoritar', 'name', 'differenceComparedToYesterday', 'trendMonthPercentage', 'trendYearPercentage', 'totalSales', 'marketQuantity', 'weeklySales', 'porcentagemVenda',  'medianMonth', 'marketPrice'];
+  displayedColumns: string[] = ['league', 'teamHome', 'scoreHome', 'teamAway', 'scoreAway'];
 
   dataSource = new MatTableDataSource<any>();
+  oddsList:any = [];
   playerName: string = '';
   term: string = '';
   tipoItemFiltro: any = 1;
-  tiposItens = [{nome: 'Nada', value: 0}, {nome: 'Caixa', value: 1},  {nome: 'Capsula', value: 2}, {nome: 'Adesivo', value: 3},  {nome: 'Agentes', value: 4}]
+  // tiposItens = [{nome: 'Nada', value: 0}, {nome: 'Caixa', value: 1},  {nome: 'Capsula', value: 2}, {nome: 'Adesivo', value: 3},  {nome: 'Agentes', value: 4}]
   private sort = new MatSort();
   @ViewChild(MatSort) set matSort(ms: MatSort) {
     this.sort = ms;
@@ -27,7 +28,6 @@ export class ItensTableComponent implements OnInit {
   }
   
   constructor(private service:ItensService, public itensService: ItensService) {}
- 
 
   ngOnInit() {
       this.fazBuscaItens();
@@ -38,40 +38,53 @@ export class ItensTableComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.itensService.buscarListaFavoritos();
+    // this.itensService.buscarListaFavoritos();
     this.dataSource.sort = this.sort
+    // setInterval(() => {
+    //   this.fazBuscaItens();
+    // }, 220000); 
   }
 
 
   fazBuscaItens(){
-    this.service.getItensMercadoSteam2(this.term, this.tipoItemFiltro).subscribe((response:any) => this.dataSource = new MatTableDataSource(response['data']['items']) );
-    this.dataSource.sort = this.sort;  
+    this.service.findAllLiveEvents(this.term, this.tipoItemFiltro).subscribe((response:any) => {
+      this.dataSource = new MatTableDataSource(response) 
+    });
 
-    setTimeout(() => {
-      this.dataSource.sort = this.sort;
-    }, 1000);
+    this.service.findAllLiveOdds(this.term, this.tipoItemFiltro).subscribe((response:any) => {
+      console.log(response)
+      this.oddsList = response;
+    });
 
+
+    // this.dataSource.sort = this.sort;  
+    // setTimeout(() => {
+    //   this.dataSource.sort = this.sort;
+    // }, 1000);
   }
 
   verificarRaridadeCaixa(nome: string){
-    if(this.tipoItemFiltro == 1){
-      if(nome == "Recoil Case" || nome == 'Dreams & Nightmares Case' || nome == 'Snakebite Case' || nome == 'Fracture Case' || nome == 'Clutch Case'){
-        //dropando normal
-        return 'vermelho';
-      }else if(nome == "Prisma 2 Case"  || nome == 'CS20 Case'  || nome == 'Prisma Case' || nome == 'Danger Zone Case'  || nome == 'Horizon Case'   || nome == 'Spectrum 2 Case' 
-       || nome == 'Operation Hydra Case'  || nome == 'Spectrum Case'  || nome == 'Glove Case'  || nome == 'Gamma 2 Case'  || nome == 'Gamma Case' || nome == 'Chroma 3 Case' || nome == 'Operation Wildfire Case' || nome == 'Revolver Case'
-       || nome == 'Shadow Case' || nome == 'Falchion Case' || nome == 'Chroma 2 Case' || nome == 'Chroma Case' || nome == 'Operation Vanguard Weapon Case' || nome == 'Operation Breakout Weapon Case' || nome == 'Huntsman Weapon Case'
-       || nome == 'Operation Phoenix Weapon Case' || nome == 'CS:GO Weapon Case 3' || nome == 'Winter Offensive Weapon Case' || nome == 'CS:GO Weapon Case 2' || nome == 'Operation Bravo Case' || nome == 'CS:GO Weapon Case'){
-        //drop raro
-        return 'azul';
-      }else{
-        return 'verde';
-        //não dropa mais
-      }
-    }
+    // if(this.tipoItemFiltro == 1){
+    //   if(nome == "Recoil Case" || nome == 'Dreams & Nightmares Case' || nome == 'Snakebite Case' || nome == 'Fracture Case' || nome == 'Clutch Case'){
+    //     //dropando normal
+    //     return 'vermelho';
+    //   }else if(nome == "Prisma 2 Case"  || nome == 'CS20 Case'  || nome == 'Prisma Case' || nome == 'Danger Zone Case'  || nome == 'Horizon Case'   || nome == 'Spectrum 2 Case' 
+    //    || nome == 'Operation Hydra Case'  || nome == 'Spectrum Case'  || nome == 'Glove Case'  || nome == 'Gamma 2 Case'  || nome == 'Gamma Case' || nome == 'Chroma 3 Case' || nome == 'Operation Wildfire Case' || nome == 'Revolver Case'
+    //    || nome == 'Shadow Case' || nome == 'Falchion Case' || nome == 'Chroma 2 Case' || nome == 'Chroma Case' || nome == 'Operation Vanguard Weapon Case' || nome == 'Operation Breakout Weapon Case' || nome == 'Huntsman Weapon Case'
+    //    || nome == 'Operation Phoenix Weapon Case' || nome == 'CS:GO Weapon Case 3' || nome == 'Winter Offensive Weapon Case' || nome == 'CS:GO Weapon Case 2' || nome == 'Operation Bravo Case' || nome == 'CS:GO Weapon Case'){
+    //     //drop raro
+    //     return 'azul';
+    //   }else{
+    //     return 'verde';
+    //     //não dropa mais
+    //   }
+    // }
     return ''
   }
 
+  findOddValue(fixtureId, type){
+    return this.oddsList.find(odd => odd.fixture.id === fixtureId)?.odds[0]?.values[type]?.odd
+  }
 
 
 }

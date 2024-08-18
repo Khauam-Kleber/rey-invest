@@ -50,7 +50,7 @@ const NavigationItems = [
     children: [
       {
         id: 'steamItens',
-        title: 'Steam Itens',
+        title: 'Live Events',
         type: 'item',
         url: '/itens/steam',
         classes: 'nav-item',

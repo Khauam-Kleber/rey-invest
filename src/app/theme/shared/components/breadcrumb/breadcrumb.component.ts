@@ -101,7 +101,7 @@ export class BreadcrumbComponent implements OnInit {
       }
     });
     this.navigationList = result;
-    this.titleService.setTitle(title + ' | Rey Invest');
+    this.titleService.setTitle(title + ' | Esquema Aposta');
   }
 
 }
