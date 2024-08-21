@@ -11,6 +11,7 @@ import {ClickOutsideModule} from 'ng-click-outside';
 import {SpinnerComponent} from './components/spinner/spinner.component';
 import { MatTableModule } from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 import 'hammerjs';
 import 'mousetrap';
@@ -54,7 +55,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SpinnerComponent,
     MatTableModule,
     MatSortModule,
-    MatDialogModule 
+    MatDialogModule,
+    MatExpansionModule
   ],
   declarations: [
     DataFilterPipe,

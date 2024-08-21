@@ -10,6 +10,7 @@ import { ItensTableComponent } from './itens-table.component';
     ItensTableRoutingModule,
     SharedModule,
     CommonModule , 
+    
   ],
   declarations: [ItensTableComponent],
 

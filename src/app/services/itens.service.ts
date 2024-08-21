@@ -23,6 +23,12 @@ export class ItensService {
     return this.httpClient.get('https://steamfolio.com/api/Popular/sort?type=2&ascending=false&watchlist=false&searchTerm='+nome+'&filterType='+tipoItem+'')
   }
 
+
+
+  findStatistics(id: string) {
+    return this.httpClient.get(`${environment.apiUrl}/event/find-statistics/${id}`);
+  }
+
   findAllLiveEvents(term:string, tipoItem:string){
     return this.httpClient.get(`${environment.apiUrl}/event/find-events/live`, 
       // {params: 
